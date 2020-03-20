@@ -1,0 +1,79 @@
+version: '3.1'
+services:
+  mysql:
+    container_name: symfony5-mysql
+    build: ./docker/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: 'no'
+    volumes:
+      - ./docker-data/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=adminadmin
+    ports:
+      - 192.168.50.10:3306:3306
+  mongo:
+    image: mongo:4.2
+    container_name: symfony5-mongo
+    restart: 'no'
+    volumes:
+      - ./docker-data/mongo:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: adminadmin
+  mongo-express:
+    image: mongo-express:latest
+    container_name: symfony5-mongoexpress
+    restart: 'no'
+    depends_on:
+      - mongo
+    ports:
+      - 192.168.50.10:8082:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: adminadmin
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: adminadmin
+  php:
+    container_name: symfony5-php
+    build:
+      context: ./docker/php
+      args:
+        XDEBUG_ENABLE: '1'
+        XDEBUG_SERVERNAME: 'localhost'
+    restart: 'no'
+    depends_on:
+      - mysql
+    volumes:
+      - ./:/app:cached
+      - ./docker-data/data:/data:cached
+    env_file: ./.env.docker
+  nginx:
+    container_name: symfony5-nginx
+    build: ./docker/nginx
+    restart: 'no'
+    depends_on:
+      - php
+    volumes:
+      - ./:/app:cached
+      - ./docker-data/data:/data:cached
+    ports:
+      - 192.168.50.10:80:8080
+  portainer:
+    image: portainer/portainer:latest
+    container_name: symfony5-portainer
+    restart: 'no'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./docker-data/portainer:/data:cached
+    ports:
+      - 192.168.50.10:8083:9000
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: symfony5-phpmyadmin
+    restart: 'no'
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+    ports:
+      - 192.168.50.10:8081:80

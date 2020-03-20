@@ -1,0 +1,9 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    {% if doc %}
+        Data from document: <b>{{ doc.data }}</b>
+    {% else %}
+        No document found.
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,5 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    MongoDB document with id <a href="{{ path('frontend_homepage_mongodisplay') }}?docid={{ docid }}">{{ docid }}</a> created.
+{% endblock %}

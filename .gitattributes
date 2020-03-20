@@ -1,0 +1,21 @@
+# Ensure all files files use correct line endings.
+*.lock         eol=lf
+*.php          eol=lf
+*.sh           eol=lf
+*.xml          eol=lf
+*.json         eol=lf
+*.dist         eol=lf
+*.yml          eol=lf
+*.yaml         eol=lf
+*.twig         eol=lf
+*.js           eol=lf
+*.ts           eol=lf
+*.css          eol=lf
+*.scss         eol=lf
+*.html         eol=lf
+*.md           eol=lf
+*.adoc         eol=lf
+.gitattributes eol=lf
+.gitignore     eol=lf
+.env           eol=lf
+
