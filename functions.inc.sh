@@ -235,8 +235,8 @@ execDocker()
   fi
 
   shift
-
-  docker exec -it ${CONTAINER} /bin/bash -l -i -c "$@"
+  CMD=$@
+  docker exec -it ${CONTAINER} /bin/bash -l -i -c "$CMD"
 
   return $?
 }

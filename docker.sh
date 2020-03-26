@@ -13,7 +13,7 @@ OS=$(getOS)
 
 case "$1" in
   start)
-    if isDockerRunning; then
+    if isDockerRunning && [ "$2" != "--force" ] && [ "$3" != "--force" ]; then
       echo "Docker stack already started. Exit."
       exit 1
     fi
@@ -108,6 +108,6 @@ case "$1" in
     rebuild ${PHP_CONTAINER}
     ;;
   *)
-    echo "Usage: $0 start [--build]|stop|restart|shell|exec <command>|createdb|dropdb|recreatedb|fixtures|migratedb|build|rebuild"
+    echo "Usage: $0 start [--build][--force]|stop|restart|shell|exec <command>|createdb|dropdb|recreatedb|fixtures|migratedb|build|rebuild"
     ;;
 esac
