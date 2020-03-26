@@ -38,7 +38,16 @@ command:
 
      ./docker.sh start
     
-After the command has finished, you should see a message like `Docker stack listening on http://symfony.local`.
+After the command has finished, you should see a message like 
+
+    --------------------------------------------------------------------------------
+    Available services from Docker stack
+    --------------------------------------------------------------------------------
+    Symfony App.....: http://symfony.local
+    PhpMyAdmin......: http://symfony.local:8081
+    Mongo Express...: http://symfony.local:8082
+    Portainer.......: http://symfony.local:8083
+    --------------------------------------------------------------------------------
  
 2.) The Symfony application with database, data fixtures and frontend is build with the following command:
 
@@ -94,7 +103,11 @@ The Symfony application and the frontend are build and database migrations are e
 without cleaning anything from the database.
 
     ./docker.sh build
-     
+
+Do do a build with a creation of new database you must run
+
+    ./docker.sh rebuild
+    
 ## Development and management tools
 
 There are some development and management tools available on the Docker stack. 

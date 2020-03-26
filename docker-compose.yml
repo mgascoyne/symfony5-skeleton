@@ -39,7 +39,7 @@ services:
       context: ./docker/php
       args:
         XDEBUG_ENABLE: '1'
-        XDEBUG_SERVERNAME: 'localhost'
+        XDEBUG_SERVERNAME: 'symfony.local'
     restart: 'no'
     depends_on:
       - mysql
