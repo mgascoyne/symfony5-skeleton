@@ -52,6 +52,9 @@ Encore
         config.useBuiltIns = 'usage';
         config.corejs = 3;
     })
+    .configureBabel((babelConfig) => {
+        babelConfig.plugins.push('@babel/plugin-proposal-class-properties')
+    })
 
     // enables Sass/SCSS support
     .enableSassLoader()
@@ -69,6 +72,9 @@ Encore
     // uncomment if you use API Platform Admin (composer req api-admin)
     //.enableReactPreset()
     //.addEntry('admin', './assets/js/admin.js')
+
+    // vue.js
+    .enableVueLoader()
 ;
 
 module.exports = Encore.getWebpackConfig();

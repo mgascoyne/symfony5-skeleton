@@ -6,4 +6,8 @@
     Use user <b>admin@symfony.local</b> with password <b>adminadmin</b> to log in.
     <br/><br/>
     <a href="{{ path('frontend_homepage_mongocreate') }}">Create MongoDB document</a>
+    <br/><br/>
+    <div id="vue-root">
+        <vue-example v-bind:message="mymessage"></vue-example>
+    </div>
 {% endblock %}
