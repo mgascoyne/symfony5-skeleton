@@ -26,16 +26,12 @@ $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 });
 
-Vue.component('vue-example', {
-    props: ['message'],
-    template: '<b>{{ message }}</b>'
-});
-
 import Vue from 'vue';
+import Helloworld from './components/Helloworld';
 
-var vueRoot = new Vue({
+new Vue({
     el: '#vue-root',
-    data: {
-        mymessage: 'Hello from Vue.js!'
+    components: {
+        Helloworld
     },
 });
