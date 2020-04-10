@@ -3,13 +3,12 @@
 # Management script for Docker stack
 #
 # @author Marcel Gascoyne <marcel@gascoyne.de>
-HOST=symfony.local
-IPADDR=192.168.50.10
-PHP_CONTAINER=symfony5-php
 
+source ./.env
 source ./functions.inc.sh
 
 OS=$(getOS)
+PHP_CONTAINER=${CONTAINER_PREFIX}-php
 
 case "$1" in
   start)
@@ -83,7 +82,7 @@ case "$1" in
     ;;
   exec)
     shift
-    execDocker ${PHP_CONTAINER} $@
+    execDocker ${PHP_CONTAINER} "$@"
     ;;
   createdb)
     createDatabase ${PHP_CONTAINER}
@@ -108,6 +107,6 @@ case "$1" in
     rebuild ${PHP_CONTAINER}
     ;;
   *)
-    echo "Usage: $0 start [--build][--force]|stop|restart|shell|exec <command>|createdb|dropdb|recreatedb|fixtures|migratedb|build|rebuild"
+    echo "Usage: $0 start [--build]|stop|restart|shell|exec <command>|createdb|dropdb|recreatedb|fixtures|migratedb|build|rebuild"
     ;;
 esac
