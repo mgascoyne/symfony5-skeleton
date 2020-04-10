@@ -1,10 +1,26 @@
 <template>
-    <div>
-        <p><b>Example Vue component</b></p>
-        <div class="hello-world-styles">
-            <p class="hello-world-text">{{ message }}</p>
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">
+                Example Vue.js component
+            </p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                Message: <strong>{{ message.length > 0 ? message : 'none' }}</strong>
+            </div>
         </div>
-        <input v-model="message" />
+        <footer class="card-footer">
+            <div class="field">
+                <label class="label" for="inputMessage">Message</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input v-model="message" class="input" id="inputMessage" type="text" placeholder="Enter a message..." autofocus>
+                    <span class="icon is-small is-left">
+                        <i class="far fa-comment-dots"></i>
+                    </span>
+                </div>
+            </div>
+        </footer>
     </div>
 </template>
 
@@ -20,19 +36,4 @@
 </script>
 
 <style scoped>
-    .hello-world-styles {
-        height: 200px;
-        width: 200px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        border-style: dotted;
-        border-width: 5px;
-    }
-
-    .hello-world-text {
-        display: inline-block;
-        color: red;
-    }
 </style>

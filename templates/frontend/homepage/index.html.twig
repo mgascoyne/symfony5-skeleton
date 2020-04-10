@@ -1,5 +1,14 @@
 {% extends "base.html.twig" %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('homepage') }}
+{% endblock %}
+
+{% block title %}
+    Symfony 5 Skeleton Project
+{% endblock %}
+
 {% block body %}
     {{ render(controller('App\\Controller\\Components\\NavbarController::show')) }}
 
@@ -71,10 +80,7 @@
                     </div>
                     <div class="media-content">
                         <div class="content" id="vue-root">
-                            <p>
-                                This is a Vue component inside a box<br/>
-                                <helloworld></helloworld>
-                            </p>
+                            <helloworld></helloworld>
                         </div>
                     </div>
                 </article>
