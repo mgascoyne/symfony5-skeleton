@@ -1,5 +1,31 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <h1>This is secured content!</h1>
+    {{ render(controller('App\\Controller\\Components\\NavbarController::show')) }}
+
+    <div class="columns">
+        <div class="column">
+            <div class="box">
+                <article class="media">
+                    <div class="media-left">
+                        <figure class="image is-64x64">
+                            <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <strong>This is secured content!</strong>
+                        </div>
+                        <div class="content">
+                            <p>
+                                This page is secured by <strong>ROLE_ADMIN</strong>, see file <i>config/security.yaml</i>.<br>
+                                You can logout <a href="{{ path('app_logout') }}">here</a>.
+                            </p>
+
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
 {% endblock %}

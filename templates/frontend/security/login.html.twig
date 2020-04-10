@@ -3,35 +3,72 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+    {{ render(controller('App\\Controller\\Components\\NavbarController::show')) }}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+    <div class="container">
+        <form method="post">
+            {% if error %}
+                <div class="notification is-danger">
+                    <button class="delete"></button>
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
+            {% if app.user %}
+                <div class="notification is-info">
+                    <button class="delete"></button>
+                    You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% endif %}
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+            <div class="content">
+                <h1>Please sign in</h1>
+                Use user <b>admin@symfony.local</b> with password <b>adminadmin</b> to log in.
+            </div>
 
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" name="_remember_me"> Remember me
-        </label>
+            <div class="field">
+                <label class="label" for="inputUsername">Username</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input class="input is-success" id="inputUsername" type="email" name="email" placeholder="Enter a username..." value="{{ last_username }}" required autofocus>
+                    <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+                    <span class="icon is-small is-right">
+                    <i class="fas fa-check"></i>
+                </span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label" for="inputPassword">Password</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input class="input is-success" type="password" id="inputPassword" name="password" placeholder="Enter your password...">
+                    <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+                    <span class="icon is-small is-right">
+                    <i class="fas fa-check"></i>
+                </span>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <label class="checkbox">
+                        <input type="checkbox" name="_remember_me">
+                        Remember me
+                    </label>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary" type="submit">Sign in</button>
+                </div>
+            </div>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        </form>
     </div>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
 {% endblock %}

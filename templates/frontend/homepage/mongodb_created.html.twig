@@ -1,5 +1,29 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    MongoDB document with id <a href="{{ path('frontend_homepage_mongodisplay') }}?docid={{ docid }}">{{ docid }}</a> created.
+    {{ render(controller('App\\Controller\\Components\\NavbarController::show')) }}
+
+    <div class="columns">
+        <div class="column">
+            <div class="box">
+                <article class="media">
+                    <div class="media-left">
+                        <figure class="image is-64x64">
+                            <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <strong>MongoDB Example</strong>
+                        </div>
+                        <div class="content">
+                            <p>
+                                MongoDB document with id <a href="{{ path('frontend_homepage_mongodisplay') }}?docid={{ docid }}">{{ docid }}</a> created.
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
 {% endblock %}

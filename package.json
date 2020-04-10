@@ -1,11 +1,10 @@
 {
     "devDependencies": {
+        "@fortawesome/fontawesome-free": "^5.13.0",
         "@symfony/webpack-encore": "^0.28.2",
-        "bootstrap": "^4.4.1",
-        "core-js": "^3.0.0",
-        "jquery": "^3.4.1",
+        "bulma": "^0.8.1",
+        "core-js": "^3.6.5",
         "node-sass": "^4.13.1",
-        "popper.js": "^1.16.1",
         "regenerator-runtime": "^0.13.2",
         "sass-loader": "^7.0.1",
         "vue": "^2.6.11",
@@ -21,7 +20,5 @@
         "watch": "encore dev --watch",
         "build": "encore production --progress"
     },
-    "dependencies": {
-        "@babel/plugin-proposal-class-properties": "^7.8.3"
-    }
+    "dependencies": {}
 }

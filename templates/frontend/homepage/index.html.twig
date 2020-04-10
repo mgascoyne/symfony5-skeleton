@@ -1,13 +1,84 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <h1>Hello World!</h1>
-    You can access secured content at <a href="{{ path('frontend_homepage_secured') }}">{{ path('frontend_homepage_secured') }}</a>.<br/>
-    Use user <b>admin@symfony.local</b> with password <b>adminadmin</b> to log in.
-    <br/><br/>
-    <a href="{{ path('frontend_homepage_mongocreate') }}">Create MongoDB document</a>
-    <br/><br/>
-    <div id="vue-root">
-        <helloworld></helloworld>
+    {{ render(controller('App\\Controller\\Components\\NavbarController::show')) }}
+
+    <div class="columns">
+        <div class="column">
+            <div class="box">
+                <article class="media">
+                    <div class="media-left">
+                        <figure class="image is-64x64">
+                            <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <strong>Symfony 5 Skeleton Project</strong>
+                        </div>
+                        <div class="content">
+                            <p>
+                                This is a Symfony 5 skeleton project build with <a href="https://bulma.io" target="_blank">Bulma CSS framework</a>.<br>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="column">
+            <div class="box">
+                <article class="media">
+                    <div class="media-left">
+                        <figure class="image is-64x64">
+                            <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                You can access <strong>secured content</strong> at <a href="{{ path('frontend_homepage_secured') }}">{{ path('frontend_homepage_secured') }}</a>.
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="column">
+            <div class="box">
+                <article class="media">
+                    <div class="media-left">
+                        <figure class="image is-64x64">
+                            <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                Use this link to create a MongoDB document: <a href="{{ path('frontend_homepage_mongocreate') }}">{{ path('frontend_homepage_mongocreate') }}</a><br/>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="column">
+            <div class="box">
+                <article class="media">
+                    <div class="media-left">
+                        <figure class="image is-64x64">
+                            <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <div class="content" id="vue-root">
+                            <p>
+                                This is a Vue component inside a box<br/>
+                                <helloworld></helloworld>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
     </div>
 {% endblock %}
