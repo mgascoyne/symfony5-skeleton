@@ -8,8 +8,8 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import '../css/app.scss';
 
-// Navbar toggle changer
-function navbarToggleChanger() {
+// Navbar burger toggle
+document.addEventListener('DOMContentLoaded', function() {
     const navbarBurgers = document.getElementsByClassName('navbar-burger');
 
     if (navbarBurgers.length > 0) {
@@ -22,7 +22,4 @@ function navbarToggleChanger() {
             });
         });
     }
-}
-
-// Navbar burger toggle
-document.addEventListener('DOMContentLoaded', () => navbarToggleChanger());
+});

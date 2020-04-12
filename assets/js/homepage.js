@@ -5,6 +5,6 @@ import Helloworld from './components/Helloworld';
 new Vue({
     el: '#vue-root',
     components: {
-        Helloworld
+        'hello-world': Helloworld,
     },
 });
