@@ -43,7 +43,7 @@ After the command has finished, you should see a message like
     --------------------------------------------------------------------------------
     Available services from Docker stack
     --------------------------------------------------------------------------------
-    Symfony App.....: http://symfony.local
+    Application.....: http://symfony.local
     PhpMyAdmin......: http://symfony.local:8081
     Mongo Express...: http://symfony.local:8082
     Portainer.......: http://symfony.local:8083
@@ -66,6 +66,12 @@ and start it again later with
 
 ### Useful commands to work with the Docker stack
 
+#### Show status of the Docker stack
+
+Show status of the Docker stack and running services.
+
+    ./docker.sh status
+     
 #### Execute command in the PHP container
 
 For example to use the Symfony console. The starting path is the application directory.
