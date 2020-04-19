@@ -4,8 +4,10 @@
 #
 # @author Marcel Gascoyne <marcel@gascoyne.de>
 
-source ./.env
-source ./functions.inc.sh
+PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+source ${PROJECT_DIR}/.env
+source ${PROJECT_DIR}/docker/functions.inc.sh
 
 OS=$(getOS)
 PHP_CONTAINER=${CONTAINER_PREFIX}-php
@@ -39,14 +41,7 @@ case "$1" in
 
     docker-compose up -d ${COMPOSE_FLAGS}
     addHostsEntry ${HOST} ${IPADDR}
-    echo "--------------------------------------------------------------------------------"
-    echo "Available services from Docker stack"
-    echo "--------------------------------------------------------------------------------"
-    echo "Symfony App.....: http://${HOST}"
-    echo "PhpMyAdmin......: http://${HOST}:8081"
-    echo "Mongo Express...: http://${HOST}:8082"
-    echo "Portainer.......: http://${HOST}:8083"
-    echo "--------------------------------------------------------------------------------"
+    status
     ;;
   stop)
     if ! isDockerRunning; then
@@ -69,13 +64,15 @@ case "$1" in
       echo "Removing alias from interface ${IFNAME} (IP ${IPADDR})"
       removeDarwinIPAlias ${IFNAME} ${IPADDR}
     fi
-    echo "--------------------------------------------------------------------------------"
-    echo "Docker stack stopped."
-    echo "--------------------------------------------------------------------------------"
+
+    status
     ;;
   restart)
     $0 stop
     $0 start
+    ;;
+  status)
+    status
     ;;
   shell)
     startDockerShell ${PHP_CONTAINER}
@@ -107,6 +104,6 @@ case "$1" in
     rebuild ${PHP_CONTAINER}
     ;;
   *)
-    echo "Usage: $0 start [--build]|stop|restart|shell|exec <command>|createdb|dropdb|recreatedb|fixtures|migratedb|build|rebuild"
+    echo "Usage: $0 start [--build]|stop|restart|status|shell|exec <command>|createdb|dropdb|recreatedb|fixtures|migratedb|build|rebuild"
     ;;
 esac

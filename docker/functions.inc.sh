@@ -4,6 +4,8 @@
 #
 # @author Marcel Gascoyne <marcel@gascoyne.de>
 
+FUNCTIONS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
 # Get operating system identifier
 getOS()
 {
@@ -13,7 +15,7 @@ getOS()
 # Check if Docker stack is running
 isDockerRunning()
 {
-  if [ ! -f ".docker-interface" ]; then
+  if [ ! -f "${PROJECT_DIR}/.docker-interface" ]; then
     return 1
   fi
 
@@ -117,7 +119,7 @@ saveDockerInterfaceName()
     return 1
   fi
 
-  echo "${IFNAME}" > .docker-interface
+  echo "${IFNAME}" > ${PROJECT_DIR}/.docker-interface
 }
 
 # Load Docker interface name from file
@@ -127,7 +129,7 @@ loadDockerInterfaceName()
     return 1
   fi
 
-  echo `cat .docker-interface`
+  echo `cat ${PROJECT_DIR}/.docker-interface`
 
   return 0
 }
@@ -135,7 +137,7 @@ loadDockerInterfaceName()
 # Remove Docker interface file
 removeDockerInterfaceFile()
 {
-  if [ ! -f ".docker-interface" ]; then
+  if [ ! -f "${PROJECT_DIR}/.docker-interface" ]; then
     return 1
   fi
 
@@ -211,6 +213,7 @@ startDockerShell()
     return 1
   fi
 
+  cd ${PROJECT_DIR}
   docker exec -it ${CONTAINER} /bin/bash -l -i
 
   return $?
@@ -236,6 +239,8 @@ execDocker()
 
   shift
   CMD=$@
+
+  cd ${PROJECT_DIR}
   docker exec -it ${CONTAINER} /bin/bash -l -i -c "$CMD"
 
   return $?
@@ -368,4 +373,26 @@ rebuild()
   createDatabase ${CONTAINER}
   migrateDatabase ${CONTAINER}
   loadFixtures ${CONTAINER}
+}
+
+# Show status of docker stack
+status()
+{
+  cat ${FUNCTIONS_DIR}/banner.txt
+  echo
+
+  if isDockerRunning; then
+    echo "--------------------------------------------------------------------------------"
+    echo "Available services from Docker stack"
+    echo "--------------------------------------------------------------------------------"
+    echo "Application.....: http://${HOST}"
+    echo "PhpMyAdmin......: http://${HOST}:8081"
+    echo "Mongo Express...: http://${HOST}:8082"
+    echo "Portainer.......: http://${HOST}:8083"
+    echo "--------------------------------------------------------------------------------"
+  else
+    echo "--------------------------------------------------------------------------------"
+    echo "Docker stack stopped."
+    echo "--------------------------------------------------------------------------------"
+  fi
 }
