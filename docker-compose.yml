@@ -27,7 +27,7 @@ services:
     depends_on:
       - mongo
     ports:
-      - ${IPADDR}:8082:8081
+      - ${IPADDR}:8083:8081
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_EXPRESS_USERNAME}
       - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_EXPRESS_PASSWORD}
@@ -57,7 +57,7 @@ services:
       - ./:/app:cached
       - ./docker-data/data:/data:cached
     ports:
-      - ${IPADDR}:8080:8080
+      - ${IPADDR}:8081:8080
   varnish:
     container_name: ${CONTAINER_PREFIX}-varnish
     image: varnish:6.0
@@ -66,6 +66,16 @@ services:
       - nginx
     volumes:
       - ./docker/varnish/default.vcl:/etc/varnish/default.vcl:ro
+    ports:
+      - ${IPADDR}:8080:80
+  haproxy:
+    container_name: ${CONTAINER_PREFIX}-haproxy
+    image: haproxy:2.1
+    restart: 'no'
+    depends_on:
+      - varnish
+    volumes:
+      - ./docker/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
     ports:
       - ${IPADDR}:80:80
   portainer:
@@ -76,7 +86,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./docker-data/portainer:/data:cached
     ports:
-      - ${IPADDR}:8083:9000
+      - ${IPADDR}:8084:9000
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: ${CONTAINER_PREFIX}-phpmyadmin
@@ -86,4 +96,4 @@ services:
     environment:
       PMA_HOST: mysql
     ports:
-      - ${IPADDR}:8081:80
+      - ${IPADDR}:8082:80

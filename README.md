@@ -1,6 +1,6 @@
 # Symfony 5 Skeleton Project
 
-Symfony 5 Skeleton Project with Docker, PHP 7.4, Nginx, Varnish, MySQL 5.7, MongoDB 4.2,
+Symfony 5 Skeleton Project with Docker, PHP 7.4, Nginx, Varnish, HAProxy, MySQL 5.7, MongoDB 4.2,
 PhpMyAdmin, Mongo Express and Portainer.
 
 For the frontend part [Bulma.io](https://bulma.io) CSS framework and [Vue.js](https://vuejs.org) is used.
@@ -46,12 +46,18 @@ After the command has finished, you should see a message like
     Available services from Docker stack
     --------------------------------------------------------------------------------
     Application.....: http://symfony.local
-    Nginx...........: http://symfony.local:8080
-    PhpMyAdmin......: http://symfony.local:8081
-    Mongo Express...: http://symfony.local:8082
-    Portainer.......: http://symfony.local:8083
+    Varnish.........: http://symfony.local:8080
+    Nginx...........: http://symfony.local:8081
+    PhpMyAdmin......: http://symfony.local:8082
+    Mongo Express...: http://symfony.local:8083
+    Portainer.......: http://symfony.local:8084
     --------------------------------------------------------------------------------
  
+All HTTP requests are served by the HAProxy loadbalancer listening on port 80. The HAProxy uses the Varnish
+proxy as backend server. Varnish uses the Nginx webserver with the PHP-FPM backend.
+
+You can also use Varnish and Nginx directly for testing and debugging.
+   
 2.) The Symfony application with database, data fixtures and frontend is build with the following command:
 
      ./docker.sh rebuild
