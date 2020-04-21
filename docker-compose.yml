@@ -57,7 +57,17 @@ services:
       - ./:/app:cached
       - ./docker-data/data:/data:cached
     ports:
-      - ${IPADDR}:80:8080
+      - ${IPADDR}:8080:8080
+  varnish:
+    container_name: ${CONTAINER_PREFIX}-varnish
+    image: varnish:6.0
+    restart: 'no'
+    depends_on:
+      - nginx
+    volumes:
+      - ./docker/varnish/default.vcl:/etc/varnish/default.vcl:ro
+    ports:
+      - ${IPADDR}:80:80
   portainer:
     image: portainer/portainer:latest
     container_name: ${CONTAINER_PREFIX}-portainer

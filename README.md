@@ -1,6 +1,6 @@
 # Symfony 5 Skeleton Project
 
-Symfony 5 Skeleton Project with Docker, PHP 7.4, Nginx, MySQL 5.7, MongoDB 4.2,
+Symfony 5 Skeleton Project with Docker, PHP 7.4, Nginx, Varnish, MySQL 5.7, MongoDB 4.2,
 PhpMyAdmin, Mongo Express and Portainer.
 
 For the frontend part [Bulma.io](https://bulma.io) CSS framework and [Vue.js](https://vuejs.org) is used.
@@ -46,6 +46,7 @@ After the command has finished, you should see a message like
     Available services from Docker stack
     --------------------------------------------------------------------------------
     Application.....: http://symfony.local
+    Nginx...........: http://symfony.local:8080
     PhpMyAdmin......: http://symfony.local:8081
     Mongo Express...: http://symfony.local:8082
     Portainer.......: http://symfony.local:8083
