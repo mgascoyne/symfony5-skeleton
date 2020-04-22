@@ -23,21 +23,35 @@ snc_redis:
             logging: true
             options:
                 connection_timeout: 10
+        doctrine:
+            type: predis
+            alias: doctrine
+            dsn: "%env(REDIS_URL)%/3"
+            logging: true
+            options:
+                connection_timeout: 10
+        skeleton:
+            type: predis
+            alias: skeleton
+            dsn: "%env(REDIS_URL)%/4"
+            logging: true
+            options:
+                connection_timeout: 10
     session:
         client: session
         prefix: sess
 
     doctrine:
         metadata_cache:
-            client: cache
+            client: doctrine
             entity_manager: default          # the name of your entity_manager connection
             document_manager: default        # the name of your document_manager connection
         result_cache:
-            client: cache
+            client: doctrine
             entity_manager: [default]        # you may specify multiple entity_managers
         query_cache:
-            client: cache
+            client: doctrine
             entity_manager: default
         second_level_cache:
-            client: cache
+            client: doctrine
             entity_manager: default
