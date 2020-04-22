@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 #
+# This file is part of the Yachtmarket application.
+# Unauthorized copying and using without a licence agreement
+# prohibited.
+#
+# Copyright (C) 2020 Marcel Gascoyne
+# All rights reserved.
+
+#
 # Bash functions
 #
 # @author Marcel Gascoyne <marcel@gascoyne.de>
@@ -242,6 +250,10 @@ execDocker()
 
   cd ${PROJECT_DIR}
   docker exec -it ${CONTAINER} /bin/bash -l -i -c "$CMD"
+
+  # Changing access rights, because Docker commands runs as root
+  sudo chmod -R ugo=rwX vendor
+  sudo chmod -R ugo=rwX var
 
   return $?
 }

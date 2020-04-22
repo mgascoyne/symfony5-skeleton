@@ -20,6 +20,13 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGODB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+  redis:
+    image: redis:5.0
+    container_name: ${CONTAINER_PREFIX}-redis
+    restart: 'no'
+    entrypoint: redis-server --appendonly yes
+    volumes:
+      - ./docker-data/redis:/data-
   mongo-express:
     image: mongo-express:latest
     container_name: ${CONTAINER_PREFIX}-mongoexpress
@@ -43,6 +50,8 @@ services:
     restart: 'no'
     depends_on:
       - mysql
+      - mongo
+      - redis
     volumes:
       - ./:/app:cached
       - ./docker-data/data:/data:cached

@@ -1,7 +1,7 @@
 # Symfony 5 Skeleton Project
 
 Symfony 5 Skeleton Project with Docker, PHP 7.4, Nginx, Varnish, HAProxy, MySQL 5.7, MongoDB 4.2,
-PhpMyAdmin, Mongo Express and Portainer.
+Redis 5.0, PhpMyAdmin, Mongo Express and Portainer.
 
 For the frontend part [Bulma.io](https://bulma.io) CSS framework and [Vue.js](https://vuejs.org) is used.
 
