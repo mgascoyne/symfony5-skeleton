@@ -252,8 +252,8 @@ execDocker()
   docker exec -it ${CONTAINER} /bin/bash -l -i -c "$CMD"
 
   # Changing access rights, because Docker commands runs as root
-  sudo chmod -R ugo=rwX vendor
-  sudo chmod -R ugo=rwX var
+  sudo chmod -f -R ugo=rwX vendor
+  sudo chmod -f -R ugo=rwX var
 
   return $?
 }

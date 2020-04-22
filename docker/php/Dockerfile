@@ -25,7 +25,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
       php7.4-gd \
       php7.4-fpm \
       php7.4-mbstring \
-      php-redis \
       php7.4-gettext \
       php7.4-imagick \
       php7.4-opcache \
@@ -59,8 +58,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     mkdir -p /run/php
 
 # PHP configuration
-ADD php.ini      /etc/php/7.4/cli/conf.d/
-ADD php.ini      /etc/php/7.4/fpm/conf.d/
+ADD php.cli.ini  /etc/php/7.4/cli/
+ADD php.fpm.ini  /etc/php/7.4/fpm/
 ADD php-fpm.conf /etc/php/7.4/fpm/
 ADD www.conf     /etc/php/7.4/fpm/pool.d/
 
