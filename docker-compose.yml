@@ -55,6 +55,8 @@ services:
     volumes:
       - ./:/app:cached
       - ./docker-data/data:/data:cached
+      - ./docker/php/php.cli.ini:/etc/php/7.4/cli/php.ini
+      - ./docker/php/php.fpm.ini:/etc/php/7.4/fpm/php.ini
     env_file: ./.env
   nginx:
     container_name: ${CONTAINER_PREFIX}-nginx

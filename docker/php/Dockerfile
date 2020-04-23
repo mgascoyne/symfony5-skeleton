@@ -63,7 +63,7 @@ ADD php.fpm.ini  /etc/php/7.4/fpm/
 ADD php-fpm.conf /etc/php/7.4/fpm/
 ADD www.conf     /etc/php/7.4/fpm/pool.d/
 
-# Xdebug
+# Xdebug for CLI
 RUN if [ "$XDEBUG_ENABLE" = "1" ]; then \
         # Xdebug command
         rm -f /usr/local/bin/xdebug; \
@@ -72,16 +72,6 @@ RUN if [ "$XDEBUG_ENABLE" = "1" ]; then \
         echo "export PHP_IDE_CONFIG=\"$XDEBUG_SERVERNAME\"" >> /usr/local/bin/xdebug; \
         echo "php -d xdebug.autostart=true -d xdebug.remote_enable=1 -d xdebug.remote_host=\`ip route | grep default | awk '{ print $3 }'\` $@" >> /usr/local/bin/xdebug; \
         chmod +x /usr/local/bin/xdebug; \
-        # Xdebug for PHP CLI
-        echo '[xdebug]'                      >> /etc/php/7.4/cli/conf.d/php.ini; \
-        echo 'xdebug.max_nesting_level=1000' >> /etc/php/7.4/cli/conf.d/php.ini; \
-        echo 'xdebug.remote_enable=On'       >> /etc/php/7.4/cli/conf.d/php.ini; \
-        echo 'xdebug.remote_connect_back=On' >> /etc/php/7.4/cli/conf.d/php.ini; \
-        # Xdebug for PHP FPM
-        echo '[xdebug]'                      >> /etc/php/7.4/fpm/conf.d/php.ini; \
-        echo 'xdebug.max_nesting_level=1000' >> /etc/php/7.4/fpm/conf.d/php.ini; \
-        echo 'xdebug.remote_enable=On'       >> /etc/php/7.4/fpm/conf.d/php.ini; \
-        echo 'xdebug.remote_connect_back=On' >> /etc/php/7.4/fpm/conf.d/php.ini; \
     fi
 
 # Swiftmailer output
