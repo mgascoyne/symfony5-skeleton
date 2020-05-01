@@ -1,0 +1,11 @@
+---
+- name: Development machine
+  hosts: Development
+  become: true
+  become_user: root
+  become_method: sudo
+  roles:
+    - role: "docker"
+      docker_compose_version: "1.25.5"
+      docker_users:
+        - vagrant

@@ -6,7 +6,7 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: 'no'
     volumes:
-      - ./docker-data/mysql:/var/lib/mysql
+      - ${DOCKER_DATA}/mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     ports:
@@ -16,7 +16,7 @@ services:
     container_name: ${CONTAINER_PREFIX}-mongo
     restart: 'no'
     volumes:
-      - ./docker-data/mongo:/data/db
+      - ${DOCKER_DATA}/mongo:/data/db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGODB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
@@ -26,7 +26,7 @@ services:
     restart: 'no'
     entrypoint: redis-server --appendonly yes
     volumes:
-      - ./docker-data/redis:/data-
+      - ${DOCKER_DATA}/redis:/data-
   mongo-express:
     image: mongo-express:latest
     container_name: ${CONTAINER_PREFIX}-mongoexpress
@@ -54,7 +54,7 @@ services:
       - redis
     volumes:
       - ./:/app:cached
-      - ./docker-data/data:/data:cached
+      - ${DOCKER_DATA}/data:/data:cached
       - ./docker/php/php.cli.ini:/etc/php/7.4/cli/php.ini
       - ./docker/php/php.fpm.ini:/etc/php/7.4/fpm/php.ini
     env_file: ./.env
@@ -66,7 +66,7 @@ services:
       - php
     volumes:
       - ./:/app:cached
-      - ./docker-data/data:/data:cached
+      - ${DOCKER_DATA}/data:/data:cached
     ports:
       - ${IPADDR}:8081:8080
   varnish:
@@ -95,7 +95,7 @@ services:
     restart: 'no'
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./docker-data/portainer:/data:cached
+      - ${DOCKER_DATA}/portainer:/data:cached
     ports:
       - ${IPADDR}:8084:9000
   phpmyadmin:

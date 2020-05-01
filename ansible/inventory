@@ -1,0 +1,2 @@
+[Development]
+symfony.local ansible_connection=local

@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
 #
-# This file is part of the Yachtmarket application.
-# Unauthorized copying and using without a licence agreement
-# prohibited.
-#
-# Copyright (C) 2020 Marcel Gascoyne
-# All rights reserved.
-
-#
 # Bash functions
 #
 # @author Marcel Gascoyne <marcel@gascoyne.de>

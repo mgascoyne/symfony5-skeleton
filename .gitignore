@@ -3,6 +3,7 @@
 /node_modules
 /docker-data
 .docker-interface
+.vagrant/
 
 ###> symfony/framework-bundle ###
 /.env.local
