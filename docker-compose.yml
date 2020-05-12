@@ -26,7 +26,7 @@ services:
     restart: 'no'
     entrypoint: redis-server --appendonly yes
     volumes:
-      - ${DOCKER_DATA}/redis:/data-
+      - ${DOCKER_DATA}/redis:/data
   mongo-express:
     image: mongo-express:latest
     container_name: ${CONTAINER_PREFIX}-mongoexpress
