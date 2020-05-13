@@ -44,6 +44,11 @@ You can install the plugins with the following commands:
     vagrant plugin install vagrant-env
     vagrant plugin install vagrant-hostsupdater
 
+On Windows, you must change the ACL of the `hosts` file, so Vagrant can update it. Run the 
+following command as Administrator:
+
+    cacls %SYSTEMROOT%\system32\drivers\etc\hosts /E /G %USERNAME%:W
+     
 Windows users must also install the Winnfsd plugin for using the NFS protocol for
 sharing data between the Virtualbox VM and Windows:
 
