@@ -349,7 +349,7 @@ build()
 
   execDocker ${CONTAINER} "composer install"
   execDocker ${CONTAINER} "yarn install"
-  execDocker ${CONTAINER} "yarn encore dev"
+  execDocker ${CONTAINER} "yarn run dev"
   migrateDatabase ${CONTAINER}
 }
 
@@ -372,7 +372,7 @@ rebuild()
 
   execDocker ${CONTAINER} "composer install"
   execDocker ${CONTAINER} "yarn install"
-  execDocker ${CONTAINER} "yarn encore dev"
+  execDocker ${CONTAINER} "yarn run dev"
   dropDatabase ${CONTAINER}
   createDatabase ${CONTAINER}
   migrateDatabase ${CONTAINER}

@@ -63,14 +63,14 @@ case "$1" in
     ;;
   build)
     docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "composer install"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "yarn --non-interactive  --no-progress install"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "yarn --non-interactive  --no-progress encore dev"
+    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "yarn --no-bin-links --non-interactive --no-progress install"
+    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "yarn --non-interactive  --no-progress run dev"
     docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:migrations:migrate -n"
     ;;
   rebuild)
     docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "composer install"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "yarn --non-interactive  --no-progress install"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "yarn --non-interactive  --no-progress encore dev"
+    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "yarn --no-bin-links --non-interactive --no-progress install"
+    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "yarn --non-interactive  --no-progress run dev"
     docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:database:drop --if-exists --force"
     docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:database:create"
     docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:migrations:migrate -n"
