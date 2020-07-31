@@ -4,7 +4,7 @@
 #
 # @author Marcel Gascoyne <marcel@gascoyne.de>
 
-export IPADDR=192.168.50.10
+source /app/.env
 export DOCKER_DATA=/data
 
 mkdir -p /data

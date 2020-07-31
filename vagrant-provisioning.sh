@@ -4,6 +4,7 @@
 #
 # @author Marcel Gascoyne <marcel@gascoyne.de>
 
+source /app/.env
 export PYTHONUNBUFFERED=1
 export ANSIBLE_FORCE_COLOR=1
 export DOCKER_DATA=/data
