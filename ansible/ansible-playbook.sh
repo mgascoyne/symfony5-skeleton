@@ -11,7 +11,7 @@ then
     echo "Add Ansible APT repository..."
     export DEBIAN_FRONTEND=noninteractive
     apt-get install -qq apt-transport-https ca-certificates curl software-properties-common &> /dev/null || exit 1
-    apt-add-repository -y ppa:ansible/ansible &> /dev/null || exit 1
+    #apt-add-repository -y ppa:ansible/ansible &> /dev/null || exit 1
 
     echo "Update APT repositories..."
     apt-get update -qq

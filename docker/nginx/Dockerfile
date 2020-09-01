@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 LABEL maintainer="Marcel Gascoyne <marcel@gascoyne.de>"
 LABEL description="Nginx container for Symfony 5"

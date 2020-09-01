@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 LABEL maintainer="Marcel Gascoyne <marcel@gascoyne.de>"
 LABEL description="PHP container for Symfony 5"
@@ -13,7 +13,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get -y update && \
     apt-get install -y \
       apt-transport-https \
-      python-pip \
+      python3-pip \
       mysql-client \
       php7.4-common \
       php7.4-xsl \
