@@ -9,8 +9,6 @@ services:
       - ${DOCKER_DATA}/mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    ports:
-      - ${IPADDR}:3306:3306
   mongo:
     image: mongo:4.2
     container_name: ${CONTAINER_PREFIX}-mongo
