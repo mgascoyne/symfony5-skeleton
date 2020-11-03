@@ -1,12 +1,12 @@
 version: '3.1'
 services:
-  mysql:
-    container_name: ${CONTAINER_PREFIX}-mysql
-    build: ./docker/mysql
+  mariadb:
+    image: mariadb:10.5.6
+    container_name: ${CONTAINER_PREFIX}-mariadb
     command: --default-authentication-plugin=mysql_native_password
     restart: 'no'
     volumes:
-      - ${DOCKER_DATA}/mysql:/var/lib/mysql
+      - ${DOCKER_DATA}/mariadb:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
   mongo:
@@ -47,7 +47,7 @@ services:
         XDEBUG_SERVERNAME: '${HOST}'
     restart: 'no'
     depends_on:
-      - mysql
+      - mariadb
       - mongo
       - redis
     volumes:
@@ -101,8 +101,8 @@ services:
     container_name: ${CONTAINER_PREFIX}-phpmyadmin
     restart: 'no'
     depends_on:
-      - mysql
+      - mariadb
     environment:
-      PMA_HOST: mysql
+      PMA_HOST: mariadb
     ports:
       - ${IPADDR}:8082:80

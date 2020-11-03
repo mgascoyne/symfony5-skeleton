@@ -1,6 +1,6 @@
 # Symfony 5.1 Skeleton Project
 
-Symfony 5.1 Skeleton Project with Docker, PHP 7.4, Nginx, Varnish, HAProxy, MySQL 5.7, MongoDB 4.2,
+Symfony 5.1 Skeleton Project with Docker, PHP 7.4, Nginx, Varnish, HAProxy, MariaDB 10.5.6, MongoDB 4.2,
 Redis 5.0, PhpMyAdmin, Mongo Express and Portainer.
 
 For the frontend part [Bulma.io](https://bulma.io) CSS framework and [Vue.js](https://vuejs.org) is used.
@@ -93,7 +93,7 @@ You can also use Varnish and Nginx directly for testing and debugging.
      ./docker.sh rebuild
     
 You should only use `./docker.sh rebuild` to rebuild the whole application with a fresh database and fixtures.
-After rebuild the MySQL and MongoDB databases are found in the folder `docker-data`.     
+After rebuild the MariaDB and MongoDB databases are found in the folder `docker-data`.     
 
 You can stop the Docker stack with
 
@@ -123,7 +123,7 @@ The interactive shell is started in the PHP container.
 
     ./docker.sh shell
     
-#### Recreate the MySQL database
+#### Recreate the MariaDB database
  
 The database is recreated (use with caution!) without loading data fixtures.
 
@@ -189,7 +189,7 @@ All build functions are managed by the `build.sh` script in the project root dir
      ./build.sh rebuild
     
 You should only use `./build.sh rebuild` to rebuild the whole application with a fresh database and fixtures.
-After rebuild the MySQL and MongoDB databases are found in the folder `/data`.     
+After rebuild the MariaDB and MongoDB databases are found in the folder `/data`.     
 
 ### Useful commands for the Docker stack inside the virtual machine
 
@@ -211,7 +211,7 @@ The interactive shell is started in the PHP container.
 
     ./build.sh shell
     
-#### Recreate the MySQL database
+#### Recreate the MariaDB database
  
 The database is recreated (use with caution!) without loading data fixtures.
 
