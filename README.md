@@ -1,6 +1,6 @@
-# Symfony 5.1 Skeleton Project
+# Symfony 5.2 Skeleton Project
 
-Symfony 5.1 Skeleton Project with Docker, PHP 7.4, Nginx, Varnish, HAProxy, MariaDB 10.5.6, MongoDB 4.2,
+Symfony 5.2 Skeleton Project with Docker, PHP 8.0, Nginx, Varnish, HAProxy, MariaDB 10.5.6, MongoDB 4.2,
 Redis 5.0, PhpMyAdmin, Mongo Express and Portainer.
 
 For the frontend part [Bulma.io](https://bulma.io) CSS framework and [Vue.js](https://vuejs.org) is used.
@@ -22,15 +22,15 @@ The following software products are needed for the Docker variant:
 
 Not really needed, but recommended:
 
-+ [PHP](https://php.net) 7.4 with Intl, MySQL, XDebug and MongoDB extensions
++ [PHP](https://php.net) 8.0 with Intl, MySQL, XDebug and MongoDB extensions
 + [Symfony CLI](https://symfony.com/download)
 + [Node.js](https://nodejs.org) and [Yarn](https://yarnpkg.com) package manager
 + [PHPStorm](https://www.jetbrains.com/phpstorm/) integrated development environment
 
 And for the Virtualbox / Vagrant variant you need the following:
 
-+ [Virtualbox](https://virtualbox.org) recommended version: 5.2+
-+ [Vagrant](https://www.vagrantup.com) recommended version: 2.2.7+
++ [Virtualbox](https://virtualbox.org) recommended version: 6.1+
++ [Vagrant](https://www.vagrantup.com) recommended version: 2.2.14+
 
 You also need the following plugins for Vagrant
 
