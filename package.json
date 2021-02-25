@@ -1,24 +1,24 @@
 {
     "devDependencies": {
         "@fortawesome/fontawesome-free": "^5.13.0",
-        "@symfony/webpack-encore": "^0.28.2",
+        "@symfony/webpack-encore": "^1.0.0",
         "bulma": "^0.8.1",
         "core-js": "^3.6.5",
         "node-sass": "^4.13.1",
         "regenerator-runtime": "^0.13.2",
-        "sass-loader": "^7.0.1",
+        "sass-loader": "^9.0.3",
         "vue": "^2.6.11",
         "vue-loader": "^15.0.11",
         "vue-template-compiler": "^2.6.11",
-        "webpack-notifier": "^1.6.0"
+        "webpack-notifier": "^1.6.0",
+        "file-loader": "^6.2.0"
     },
     "license": "Copyright (C) 2020 Marcel Gascoyne. All rights reserved.",
     "private": true,
     "scripts": {
-        "dev-server": "./node_modules/@symfony/webpack-encore/bin/encore.js dev-server",
-        "dev": "./node_modules/@symfony/webpack-encore/bin/encore.js dev",
-        "watch": "./node_modules/@symfony/webpack-encore/bin/encore.js dev --watch",
-        "build": "./node_modules/@symfony/webpack-encore/bin/encore.js production"
-    },
-    "dependencies": {}
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    }
 }
