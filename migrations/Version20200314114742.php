@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Migrations;
+namespace DoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
@@ -30,5 +30,10 @@ final class Version20200314114742 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('DROP TABLE user');
+    }
+
+    public function isTransactional(): bool
+    {
+        return false;
     }
 }
