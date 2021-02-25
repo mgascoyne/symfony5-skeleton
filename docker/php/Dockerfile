@@ -51,10 +51,10 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     mkdir -p /run/php
 
 # PHP configuration
-ADD php.cli.ini  /etc/php/8.0/cli/
-ADD php.fpm.ini  /etc/php/8.0/fpm/
-ADD php-fpm.conf /etc/php/8.0/fpm/
-ADD www.conf     /etc/php/8.0/fpm/pool.d/
+ADD php.cli.ini  /etc/php/8.0/cli/php.ini
+ADD php.fpm.ini  /etc/php/8.0/fpm/php.ini
+ADD php-fpm.conf /etc/php/8.0/fpm/php-fpm.conf
+ADD www.conf     /etc/php/8.0/fpm/pool.d/www.conf
 
 # Xdebug for CLI
 RUN if [ "$XDEBUG_ENABLE" = "1" ]; then \
