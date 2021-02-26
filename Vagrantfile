@@ -29,9 +29,9 @@ Vagrant.configure("2") do |config|
         end
 
         # Provisioning
-        config.vm.provision :shell, :keep_color => true, :path => "./vagrant-provisioning.sh"
+        config.vm.provision :shell, :keep_color => true, :path => "docker/vagrant-provisioning.sh"
 
         # Start Docker stack
-        config.vm.provision :shell, :keep_color => true, :path => "./vagrant-docker-start.sh", run: 'always'
+        config.vm.provision :shell, :keep_color => true, :path => "docker/vagrant-docker-start.sh", run: 'always'
     end
 end

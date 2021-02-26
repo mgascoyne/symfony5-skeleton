@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block body %}
-    {{ render(controller('App\\Controller\\Components\\NavbarController::show')) }}
+    {{ render(controller('App\\Controller\\NavbarController::show')) }}
 
     <div class="columns">
         <div class="column">
@@ -45,7 +45,7 @@
                     <div class="media-content">
                         <div class="content">
                             <p>
-                                You can access <strong>secured content</strong> at <a href="{{ path('frontend_homepage_secured') }}">{{ path('frontend_homepage_secured') }}</a>.
+                                You can access <strong>secured content</strong> at <a href="{{ path('home_secured') }}">{{ path('home_secured') }}</a>.
                             </p>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                     <div class="media-content">
                         <div class="content">
                             <p>
-                                Use this link to create a MongoDB document: <a href="{{ path('frontend_homepage_mongocreate') }}">{{ path('frontend_homepage_mongocreate') }}</a><br/>
+                                Use this link to create a MongoDB document: <a href="{{ path('home_mongocreate') }}">{{ path('home_mongocreate') }}</a><br/>
                             </p>
                         </div>
                     </div>

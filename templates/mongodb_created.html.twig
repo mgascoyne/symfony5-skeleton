@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    {{ render(controller('App\\Controller\\Components\\NavbarController::show')) }}
+    {{ render(controller('App\\Controller\\NavbarController::show')) }}
 
     <div class="columns">
         <div class="column">
@@ -18,11 +18,7 @@
                         </div>
                         <div class="content">
                             <p>
-                                {% if doc %}
-                                    Data from document: <b>{{ doc.data }}</b>
-                                {% else %}
-                                    No document found.
-                                {% endif %}
+                                MongoDB document with id <a href="{{ path('home_mongodisplay') }}?docid={{ docid }}">{{ docid }}</a> created.
                             </p>
                         </div>
                     </div>

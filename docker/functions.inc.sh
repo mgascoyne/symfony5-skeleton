@@ -350,6 +350,9 @@ build()
   execDocker ${CONTAINER} "composer install"
   execDocker ${CONTAINER} "yarn install"
   execDocker ${CONTAINER} "yarn run dev"
+  execDocker ${CONTAINER} "bin/console doctrine:cache:clear-metadata"
+  execDocker ${CONTAINER} "bin/console doctrine:cache:clear-query"
+  execDocker ${CONTAINER} "bin/console doctrine:cache:clear-result"
   migrateDatabase ${CONTAINER}
 }
 
@@ -373,6 +376,9 @@ rebuild()
   execDocker ${CONTAINER} "composer install"
   execDocker ${CONTAINER} "yarn install"
   execDocker ${CONTAINER} "yarn run dev"
+  execDocker ${CONTAINER} "bin/console doctrine:cache:clear-metadata"
+  execDocker ${CONTAINER} "bin/console doctrine:cache:clear-query"
+  execDocker ${CONTAINER} "bin/console doctrine:cache:clear-result"
   dropDatabase ${CONTAINER}
   createDatabase ${CONTAINER}
   migrateDatabase ${CONTAINER}

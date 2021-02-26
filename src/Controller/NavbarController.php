@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Components;
+namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +21,6 @@ class NavbarController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        //return $this->render('pages/frontend/security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-        return $this->render('components/navigation_bar.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        return $this->render('navigation_bar.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 }
