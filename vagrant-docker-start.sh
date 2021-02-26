@@ -4,15 +4,16 @@
 #
 # @author Marcel Gascoyne <marcel@gascoyne.de>
 
+set -a
+
 source /app/.env
-export DOCKER_DATA=/data
+source /app/.env.vagrant
 
-mkdir -p /data
+cd ${PROJECT_DIR}
+sudo chmod -R ugo=rwX ${DOCKER_DATA}
 
-cd /app
-
-if [ -z `docker-compose ps -q php` ] || [ -z `docker ps -q --no-trunc | grep $(docker-compose ps -q php)` ]; then
-  docker-compose up -d
+if [ -z `docker ps -f status=running | grep ${PROJECT}_php` ]; then
+  docker-compose -p ${PROJECT} -f "${DOCKER_DIR}/docker-compose-${ENV}.yml" up -d ${COMPOSE_FLAGS}
 fi
 
 ./build.sh status

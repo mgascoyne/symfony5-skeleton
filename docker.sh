@@ -4,17 +4,59 @@
 #
 # @author Marcel Gascoyne <marcel@gascoyne.de>
 
+set -a
+
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+DOCKER_DIR=${PROJECT_DIR}/docker
+DOCKER_DATA=${PROJECT_DIR}/docker-data
 
 source ${PROJECT_DIR}/.env
 source ${PROJECT_DIR}/docker/functions.inc.sh
 
 OS=$(getOS)
+
+FORCE="false"
+BUILD="false"
+COMPOSE_FLAGS=""
+ENV=dev
+POSITIONAL=()
+
 PHP_CONTAINER=${CONTAINER_PREFIX}-php
 
-case "$1" in
+while [[ $# -gt 0 ]]
+do
+  param="$1"
+
+  case $param in
+    --force|-f)
+      FORCE="true"
+      shift
+      ;;
+    --build|-b)
+      BUILD="true"
+      shift
+      ;;
+    --env|-e)
+      if [ $# -lt 2 ]; then
+        echo "--env Parameter needs environment"
+        exit 1
+      fi
+      ENV=$2
+      shift
+      shift
+      ;;
+    *)
+      POSITIONAL+=("$1")
+      shift
+      ;;
+  esac
+done
+
+set -- "${POSITIONAL[@]}"
+
+case $1 in
   start)
-    if isDockerRunning && [ "$2" != "--force" ] && [ "$3" != "--force" ]; then
+    if isDockerRunning && [ $FORCE != "true" ]; then
       echo "Docker stack already started. Exit."
       exit 1
     fi
@@ -33,13 +75,18 @@ case "$1" in
       saveDockerInterfaceName ${IFNAME}
     fi
 
-    if [ $# -eq 2 ] && [ "$2" == "--build" ]; then
-      COMPOSE_FLAGS="--build"
-    else
-      COMPOSE_FLAGS=""
+    if [ "$BUILD" == "true" ]; then
+      COMPOSE_FLAGS="${COMPOSE_FLAGS} --build"
     fi
 
-    docker-compose up -d ${COMPOSE_FLAGS}
+    sudo mkdir -p ${DOCKER_DATA}/data
+    sudo mkdir -p ${DOCKER_DATA}/mariadb
+    sudo mkdir -p ${DOCKER_DATA}/mongo
+    sudo mkdir -p ${DOCKER_DATA}/portainer
+    sudo mkdir -p ${DOCKER_DATA}/redis
+    sudo chmod -R ugo=rwX ${DOCKER_DATA}
+
+    docker-compose -p ${PROJECT} -f "${DOCKER_DIR}/docker-compose-${ENV}.yml" up -d ${COMPOSE_FLAGS}
     addHostsEntry ${HOST} ${IPADDR}
     status
     ;;
@@ -49,7 +96,8 @@ case "$1" in
       exit 1
     fi
 
-    docker-compose down
+    docker-compose -p ${PROJECT} -f "${DOCKER_DIR}/docker-compose-${ENV}.yml" down ${COMPOSE_FLAGS}
+
     removeHostsEntry ${HOST}
 
     IFNAME=$(loadDockerInterfaceName)
@@ -68,8 +116,17 @@ case "$1" in
     status
     ;;
   restart)
+    START_FLAGS=""
+    if [ "$BUILD" == "true" ]; then
+      START_FLAGS="--build"
+    fi
+
+    if [ ! -z "$ENV" ]; then
+      START_FLAGS="${START_FLAGS} --env ${ENV}"
+    fi
+
     $0 stop
-    $0 start
+    $0 start ${START_FLAGS}
     ;;
   status)
     status
@@ -104,6 +161,6 @@ case "$1" in
     rebuild ${PHP_CONTAINER}
     ;;
   *)
-    echo "Usage: $0 start [--build]|stop|restart|status|shell|exec <command>|createdb|dropdb|recreatedb|fixtures|migratedb|build|rebuild"
+    echo "Usage: $0 start [--build|-b]|stop|restart|status|shell|exec <command>|createdb|dropdb|recreatedb|fixtures|migratedb|build|rebuild [--env|-e <environment>] [--force|-f]"
     ;;
 esac

@@ -5,9 +5,10 @@
 #
 # @author Marcel Gascoyne <marcel@gascoyne.de>
 
-PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+set -a
 
-source ${PROJECT_DIR}/.env
+source /app/.env
+source /app/.env.vagrant
 
 PHP_CONTAINER=${CONTAINER_PREFIX}-php
 
@@ -21,7 +22,7 @@ fi
 
 case "$1" in
   status)
-    if [ -z `docker-compose ps -q php` ] || [ -z `docker ps -q --no-trunc | grep $(docker-compose ps -q php)` ]; then
+    if [ -z `docker ps -f status=running | grep ${PROJECT}_php` ]; then
       echo "--------------------------------------------------------------------------------"
       echo "No services running."
       echo "--------------------------------------------------------------------------------"

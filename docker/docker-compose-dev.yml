@@ -41,7 +41,7 @@ services:
   php:
     container_name: ${CONTAINER_PREFIX}-php
     build:
-      context: ./docker/php
+      context: ${DOCKER_DIR}/php
       args:
         XDEBUG_ENABLE: '1'
         XDEBUG_SERVERNAME: '${HOST}'
@@ -51,19 +51,19 @@ services:
       - mongo
       - redis
     volumes:
-      - ./:/app:cached
+      - ${PROJECT_DIR}:/app:cached
       - ${DOCKER_DATA}/data:/data:cached
-      - ./docker/php/php.cli.ini:/etc/php/7.4/cli/php.ini
-      - ./docker/php/php.fpm.ini:/etc/php/7.4/fpm/php.ini
-    env_file: ./.env
+      - ${DOCKER_DIR}/php/php.cli.ini:/etc/php/7.4/cli/php.ini
+      - ${DOCKER_DIR}/php/php.fpm.ini:/etc/php/7.4/fpm/php.ini
+    env_file: ${PROJECT_DIR}/.env
   nginx:
     container_name: ${CONTAINER_PREFIX}-nginx
-    build: ./docker/nginx
+    build: ${DOCKER_DIR}/nginx
     restart: 'no'
     depends_on:
       - php
     volumes:
-      - ./:/app:cached
+      - ${PROJECT_DIR}:/app:cached
       - ${DOCKER_DATA}/data:/data:cached
     ports:
       - ${IPADDR}:8081:8080
@@ -74,7 +74,7 @@ services:
     depends_on:
       - nginx
     volumes:
-      - ./docker/varnish/default.vcl:/etc/varnish/default.vcl:ro
+      - ${DOCKER_DIR}/varnish/default.vcl:/etc/varnish/default.vcl:ro
     ports:
       - ${IPADDR}:8080:80
   haproxy:
@@ -84,7 +84,7 @@ services:
     depends_on:
       - varnish
     volumes:
-      - ./docker/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+      - ${DOCKER_DIR}/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
     ports:
       - ${IPADDR}:80:80
   portainer:
