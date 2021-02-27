@@ -1,7 +1,7 @@
 # Symfony 5.2 Skeleton Project
 
 Symfony 5.2 Skeleton Project with Docker, PHP 8.0, Nginx, Varnish, HAProxy, MariaDB 10.5.6, MongoDB 4.2,
-Redis 5.0, PhpMyAdmin, Mongo Express and Portainer.
+Redis 5.0, PhpMyAdmin, Mongo Express, Portainer and Mailhog mailserver.
 
 For the frontend part [Bulma.io](https://bulma.io) CSS framework and [Vue.js](https://vuejs.org) is used.
 
@@ -81,6 +81,7 @@ After the command has finished, you should see a message like
     PhpMyAdmin......: http://symfony.local:8082
     Mongo Express...: http://symfony.local:8083
     Portainer.......: http://symfony.local:8084
+    Mailhog.........: http://symfony.local:8085
     --------------------------------------------------------------------------------
  
 All HTTP requests are served by the HAProxy loadbalancer listening on port 80. The HAProxy uses the Varnish
@@ -175,6 +176,7 @@ After this is step is done you should see a message like
     PhpMyAdmin......: http://symfony.local:8082
     Mongo Express...: http://symfony.local:8083
     Portainer.......: http://symfony.local:8084
+    Mailhog.........: http://symfony.local:8085
     --------------------------------------------------------------------------------
 
 Now you can log into the virtual machine: `vagrant ssh`. You can step into the project
@@ -270,3 +272,9 @@ management toolset that allows you to easily build, manage and maintain Docker
 environments.
 
 You can access it at [http://symfony.local:8083](http://symfony.local:8083).
+
+### Mailhog
+
+[Mailhog](https://github.com/mailhog/MailHog) is an email testing tool for developers.
+Configure your application to use MailHog for SMTP delivery, view messages in the web UI, or retrieve them with the JSON API.
+Optionally release messages to real SMTP servers for delivery.

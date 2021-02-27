@@ -25,6 +25,15 @@ services:
     entrypoint: redis-server --appendonly yes
     volumes:
       - ${DOCKER_DATA}/redis:/data
+  mailhog:
+    container_name: ${CONTAINER_PREFIX}-mailhog
+    image: mailhog/mailhog:latest
+    restart: 'no'
+    environment:
+      - MH_HOSTNAME=symfony.local
+      - MH_SMTP_BIND_ADDR=0.0.0.0:25
+    ports:
+      - ${IPADDR}:8085:8025
   mongo-express:
     image: mongo-express:latest
     container_name: ${CONTAINER_PREFIX}-mongoexpress
@@ -50,6 +59,7 @@ services:
       - mariadb
       - mongo
       - redis
+      - mailhog
     volumes:
       - ${PROJECT_DIR}:/app:cached
       - ${DOCKER_DATA}/data:/data:cached
