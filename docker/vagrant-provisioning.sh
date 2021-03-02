@@ -23,4 +23,4 @@ sudo chmod -R ugo=rwX ${DOCKER_DATA}
 
 docker-compose -p ${PROJECT} -f "${DOCKER_DIR}/docker-compose-${ENV}.yml" up -d ${COMPOSE_FLAGS}
 
-./build.sh rebuild
+./build.sh phing rebuild-dev

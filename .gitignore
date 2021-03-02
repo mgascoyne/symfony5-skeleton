@@ -4,6 +4,7 @@
 /docker-data
 .docker-interface
 .vagrant/
+/build/
 
 ###> symfony/framework-bundle ###
 /.env.local

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="doctrine" basedir="${project.dir.root}">
+    <target name="doctrine:database:create">
+        <exec executable="php" checkreturn="true" passthru="true">
+            <arg value="bin/console" />
+            <arg value="doctrine:database:create" />
+            <arg value="--env=prod" />
+            <arg value="-vvv" />
+        </exec>
+    </target>
+
+    <target name="doctrine:database:drop">
+        <exec executable="php" checkreturn="true" passthru="true">
+            <arg value="bin/console" />
+            <arg value="doctrine:database:drop" />
+            <arg value="--env=prod" />
+            <arg value="--force" />
+            <arg value="-vvv" />
+        </exec>
+    </target>
+
+    <target name="doctrine:migrate">
+        <exec executable="php" checkreturn="true" passthru="true">
+            <arg value="bin/console" />
+            <arg value="doctrine:migration:migrate" />
+            <arg value="-n" />
+        </exec>
+    </target>
+
+    <target name="doctrine:fixtures">
+        <exec executable="php" checkreturn="true" passthru="true">
+            <arg value="bin/console" />
+            <arg value="doctrine:fixtures:load" />
+            <arg value="-n" />
+        </exec>
+    </target>
+
+    <target name="doctrine:database:purge" depends="
+        doctrine:database:drop,
+        doctrine:database:create,
+        doctrine:migrate">
+    </target>
+</project>

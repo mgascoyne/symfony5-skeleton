@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="frontend" basedir="${project.dir.root}">
+    <target name="frontend:build-dev">
+        <exec command="/bin/bash -c &quot;source ~/.nvm/nvm.sh &amp;&amp; yarn install --no-progress --non-interactive&quot;" passthru="true" checkreturn="true" />
+        <exec command="/bin/bash -c &quot;source ~/.nvm/nvm.sh &amp;&amp; yarn encore dev&quot;" passthru="true" checkreturn="true" />
+    </target>
+
+    <target name="frontend:build">
+        <exec command="/bin/bash -c &quot;source ~/.nvm/nvm.sh &amp;&amp; yarn install --no-progress --non-interactive&quot;" passthru="true" checkreturn="true" />
+        <exec command="/bin/bash -c &quot;source ~/.nvm/nvm.sh &amp;&amp; yarn encore prod&quot;" passthru="true" checkreturn="true" />
+    </target>
+</project>
+

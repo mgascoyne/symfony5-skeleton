@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="symfony5-skeleton" basedir="." default="build" description="Symfony 5 Skeleton">
+    <property file="${project.basedir}/phing.properties" />
+
+    <import>
+        <fileset dir="${phing.include.path}">
+            <include name="*.xml" />
+        </fileset>
+    </import>
+</project>

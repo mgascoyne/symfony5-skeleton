@@ -138,29 +138,11 @@ case $1 in
     shift
     execDocker ${PHP_CONTAINER} "$@"
     ;;
-  createdb)
-    createDatabase ${PHP_CONTAINER}
-    ;;
-  dropdb)
-    dropDatabase ${PHP_CONTAINER}
-    ;;
-  recreatedb)
-    dropDatabase ${PHP_CONTAINER}
-    createDatabase ${PHP_CONTAINER}
-    ;;
-  fixtures)
-    loadFixtures ${PHP_CONTAINER}
-    ;;
-  migratedb)
-    migrateDatabase ${PHP_CONTAINER}
-    ;;
-  build)
-    build ${PHP_CONTAINER}
-    ;;
-  rebuild)
-    rebuild ${PHP_CONTAINER}
+  phing)
+    shift
+    runPhing ${PHP_CONTAINER} "$@"
     ;;
   *)
-    echo "Usage: $0 start [--build|-b]|stop|restart|status|shell|exec <command>|createdb|dropdb|recreatedb|fixtures|migratedb|build|rebuild [--env|-e <environment>] [--force|-f]"
+    echo "Usage: $0 start [--build|-b] [--force|-f] [--env|-e <environment>]|stop [--env|-e <environment>]|restart [--env|-e <environment>]|status|shell|exec <command>|phing <target>"
     ;;
 esac

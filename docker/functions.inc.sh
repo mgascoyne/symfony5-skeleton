@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 #
-# Bash functions
+# Yachtboerse 24
 #
-# @author Marcel Gascoyne <marcel@gascoyne.de>
+# Bash functions for Docker management
+#
+# Copyright (C) 2021 Marcel Gascoyne
+# All rights reserved
 
 FUNCTIONS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
@@ -242,147 +245,38 @@ execDocker()
 
   cd ${PROJECT_DIR}
   docker exec -it ${CONTAINER} /bin/bash -l -i -c "$CMD"
+  docker exec -it ${CONTAINER} /bin/bash -l -i -c "chmod -f -R ugo=rwX ."
 
-  # Changing access rights, because Docker commands runs as root
-  sudo chmod -f -R ugo=rwX vendor
-  sudo chmod -f -R ugo=rwX var
 
   return $?
 }
 
-# Create database
+# Run Phing in given Docker container
 #
 # $1 Container name
-createDatabase()
+# $@ Arguments
+runPhing()
 {
   CONTAINER=$1
 
   if ! isDockerRunning; then
     echo "Docker stack not running. Exit."
-    exit 1
-  fi
-
-  if [ $# -ne 1 ]; then
-    echo "createDatabase(): Wrong number of arguments. Exit."
     return 1
   fi
 
-  execDocker ${CONTAINER} "php bin/console doctrine:database:create"
-}
-
-# Migrate database
-#
-# $1 Container name
-migrateDatabase()
-{
-  CONTAINER=$1
-
-  if ! isDockerRunning; then
-    echo "Docker stack not running. Exit."
-    exit 1
-  fi
-
-  if [ $# -ne 1 ]; then
-    echo "migrateDatabase(): Wrong number of arguments. Exit."
+  if [ $# -lt 1 ]; then
+    echo "runPhing(): Wrong number of arguments. Exit."
     return 1
   fi
 
-  execDocker ${CONTAINER} "php bin/console doctrine:migrations:migrate -n"
-}
+  shift
+  ARGS=$@
 
-# Load fixtures
-#
-# $1 Container name
-loadFixtures()
-{
-  CONTAINER=$1
+  cd ${PROJECT_DIR}
+  docker exec -it ${CONTAINER} /bin/bash -l -i -c "phing $ARGS"
+  docker exec -it ${CONTAINER} /bin/bash -l -i -c "chmod -f -R ugo=rwX ."
 
-  if ! isDockerRunning; then
-    echo "Docker stack not running. Exit."
-    exit 1
-  fi
-
-  if [ $# -ne 1 ]; then
-    echo "loadFixtures(): Wrong number of arguments. Exit."
-    return 1
-  fi
-
-  execDocker ${CONTAINER} "php bin/console doctrine:fixtures:load -n"
-}
-
-# Drop database
-#
-# $1 Container name
-dropDatabase()
-{
-  CONTAINER=$1
-
-  if ! isDockerRunning; then
-    echo "Docker stack not running. Exit."
-    exit 1
-  fi
-
-  if [ $# -ne 1 ]; then
-    echo "dropDatabase(): Wrong number of arguments. Exit."
-    return 1
-  fi
-
-  execDocker ${CONTAINER} "php bin/console doctrine:database:drop --if-exists --force"
-}
-
-# Normal build
-#
-# $1 Container name
-build()
-{
-  CONTAINER=$1
-
-  if ! isDockerRunning; then
-    echo "Docker stack not running. Exit."
-    exit 1
-  fi
-
-  if [ $# -ne 1 ]; then
-    echo "build(): Wrong number of arguments. Exit."
-    return 1
-  fi
-
-  execDocker ${CONTAINER} "composer install"
-  execDocker ${CONTAINER} "yarn install"
-  execDocker ${CONTAINER} "yarn run dev"
-  execDocker ${CONTAINER} "bin/console doctrine:cache:clear-metadata"
-  execDocker ${CONTAINER} "bin/console doctrine:cache:clear-query"
-  execDocker ${CONTAINER} "bin/console doctrine:cache:clear-result"
-  migrateDatabase ${CONTAINER}
-}
-
-# Full rebuild with fresh database and fixtures
-#
-# $1 Container name
-rebuild()
-{
-  CONTAINER=$1
-
-  if ! isDockerRunning; then
-    echo "Docker stack not running. Exit."
-    exit 1
-  fi
-
-  if [ $# -ne 1 ]; then
-    echo "rebuild(): Wrong number of arguments. Exit."
-    return 1
-  fi
-
-  execDocker ${CONTAINER} "composer install"
-  execDocker ${CONTAINER} "yarn install"
-  execDocker ${CONTAINER} "yarn run dev"
-  execDocker ${CONTAINER} "bin/console doctrine:cache:clear-metadata"
-  execDocker ${CONTAINER} "bin/console doctrine:cache:clear-query"
-  execDocker ${CONTAINER} "bin/console doctrine:cache:clear-result"
-  dropDatabase ${CONTAINER}
-  createDatabase ${CONTAINER}
-  migrateDatabase ${CONTAINER}
-  loadFixtures ${CONTAINER}
+  return $?
 }
 
 # Show status of docker stack

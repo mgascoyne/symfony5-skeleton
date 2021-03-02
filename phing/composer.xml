@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="composer" basedir="${project.dir.root}">
+    <target name="composer:install">
+        <exec executable="php" passthru="true" checkreturn="true">
+            <arg value="/usr/local/bin/composer" />
+            <arg value="install" />
+            <arg value="--no-interaction" />
+        </exec>
+    </target>
+
+    <target name="composer:update">
+        <exec executable="php" passthru="true" checkreturn="true">
+            <arg value="/usr/local/bin/composer" />
+            <arg value="update" />
+            <arg value="--no-interaction" />
+        </exec>
+    </target>
+
+    <target name="composer:check-dependencies">
+        <exec executable="php" passthru="true" checkreturn="true">
+            <arg value="/usr/local/bin/composer" />
+            <arg value="install" />
+            <arg value="--dry-run" />
+            <arg value="--no-interaction" />
+        </exec>
+    </target>
+</project>
+

@@ -46,47 +46,13 @@ case "$1" in
   exec)
     shift
     docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "$@"
+    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "chmod -f -R ugo=rwX ."
     ;;
-  createdb)
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:database:create"
-    ;;
-  dropdb)
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:database:drop --if-exists --force"
-    ;;
-  recreatedb)
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:database:drop --if-exists --force"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:database:create"
-    ;;
-  fixtures)
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:fixtures:load -n"
-    ;;
-  migratedb)
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:migrations:migrate -n"
-    ;;
-  build)
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "composer install"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "yarn --no-bin-links --non-interactive --no-progress install"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "yarn --non-interactive  --no-progress run dev"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:cache:clear-metadata"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:cache:clear-query"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:cache:clear-result"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:migrations:migrate -n"
-
-    ;;
-  rebuild)
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "composer install"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "yarn --no-bin-links --non-interactive --no-progress install"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "yarn --non-interactive  --no-progress run dev"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:cache:clear-metadata"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:cache:clear-query"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:cache:clear-result"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:database:drop --if-exists --force"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:database:create"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:migrations:migrate -n"
-    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "php bin/console doctrine:fixtures:load -n"
-    ;;
-
+  phing)
+    shift
+    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "phing $@"
+    docker exec ${DOCKER_EXEC_FLAGS} ${PHP_CONTAINER} /bin/bash ${BASH_FLAGS} -c "chmod -f -R ugo=rwX ."
   *)
-    echo "Usage: $0 status|shell|exec|createdb|dropdb|recreatedb|fixtures|migratedb|build|rebuild"
+    echo "Usage: $0 status|shell|exec <command>|phing <target>"
     ;;
 esac

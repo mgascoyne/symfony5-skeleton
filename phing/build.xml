@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="build" basedir="${project.dir.root}">
+    <target name="build:prepare">
+        <mkdir dir="${project.dir.build}" />
+    </target>
+
+    <target name="build:cleanup">
+        <delete dir="${project.dir.build}" />
+    </target>
+
+    <target name="build" depends="
+        build:cleanup,
+        build:prepare,
+        composer:install,
+        symfony:cache-clear,
+        frontend:build,
+        doctrine:migrate
+    "/>
+
+    <target name="build-dev" depends="
+        build:cleanup,
+        build:prepare,
+        composer:install,
+        symfony:cache-clear,
+        frontend:build-dev,
+        doctrine:migrate
+    "/>
+
+    <target name="rebuild" depends="
+        build:cleanup,
+        build:prepare,
+        composer:install,
+        symfony:cache-clear,
+        frontend:build,
+        doctrine:database:drop,
+        doctrine:database:create,
+        doctrine:migrate,
+        doctrine:fixtures
+    "/>
+
+    <target name="rebuild-dev" depends="
+        build:cleanup,
+        build:prepare,
+        composer:install,
+        symfony:cache-clear,
+        frontend:build-dev,
+        doctrine:database:drop,
+        doctrine:database:create,
+        doctrine:migrate,
+        doctrine:fixtures
+    "/>
+
+</project>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="test" basedir="${project.dir.root}">
+    <target name="test:phpunit" description="Run unit tests with PHPUnit">
+        <exec executable="php" dir="${project.basedir}" checkreturn="true" passthru="true">
+            <arg value="bin/phpunit"/>
+            <arg value="-d zend.enable_gc=0"/>
+            <arg value="--log-junit"/>
+            <arg value="${project.basedir}/build/test-results/junit.xml"/>
+            <arg value="-dmemory_limit=1024M"/>
+        </exec>
+    </target>
+
+    <target name="test:coverage" description="Run unit tests with PHPUnit and build code coverage">
+        <exec executable="php" dir="${project.basedir}" checkreturn="true" passthru="true">
+            <arg value="bin/phpunit"/>
+            <arg value="--coverage-clover"/>
+            <arg value="${project.basedir}/build/test-results/clover.xml"/>
+            <arg value="--coverage-html"/>
+            <arg value="${project.basedir}/build/test-results/coverage-html"/>
+            <arg value="--coverage-xml"/>
+            <arg value="${project.basedir}/build/test-results/coverage-xml"/>
+            <arg value="--log-junit"/>
+            <arg value="${project.basedir}/build/test-results/junit.xml"/>
+        </exec>
+    </target>
+
+</project>

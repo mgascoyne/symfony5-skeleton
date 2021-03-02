@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="symfony" basedir="${project.dir.root}">
+    <target name="symfony:cache-clear">
+        <exec executable="php" checkreturn="true" passthru="true">
+            <arg value="bin/console" />
+            <arg value="cache:clear" />
+        </exec>
+
+        <exec executable="php" checkreturn="true" passthru="true">
+            <arg value="bin/console" />
+            <arg value="doctrine:cache:clear-metadata" />
+        </exec>
+
+        <exec executable="php" checkreturn="true" passthru="true">
+            <arg value="bin/console" />
+            <arg value="doctrine:cache:clear-query" />
+        </exec>
+
+        <exec executable="php" checkreturn="true" passthru="true">
+            <arg value="bin/console" />
+            <arg value="doctrine:cache:clear-result" />
+        </exec>
+    </target>
+</project>

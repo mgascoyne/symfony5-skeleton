@@ -49,11 +49,7 @@ services:
       - ME_CONFIG_BASICAUTH_PASSWORD=${MONGO_EXPRESS_PASSWORD}
   php:
     container_name: ${CONTAINER_PREFIX}-php
-    build:
-      context: ${DOCKER_DIR}/php
-      args:
-        XDEBUG_ENABLE: '1'
-        XDEBUG_SERVERNAME: '${HOST}'
+    build: ${DOCKER_DIR}/php
     restart: 'no'
     depends_on:
       - mariadb
@@ -61,8 +57,8 @@ services:
       - redis
       - mailhog
     volumes:
-      - ${PROJECT_DIR}:/app:cached
-      - ${DOCKER_DATA}/data:/data:cached
+      - ${PROJECT_DIR}:/app
+      - ${DOCKER_DATA}/data:/data
       - ${DOCKER_DIR}/php/php.cli.ini:/etc/php/7.4/cli/php.ini
       - ${DOCKER_DIR}/php/php.fpm.ini:/etc/php/7.4/fpm/php.ini
     env_file: ${PROJECT_DIR}/.env

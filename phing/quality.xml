@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="quality" basedir="${project.basedir}" description="Quality targets">
+    <property name="pdepend"    value="${project.basedir}/bin/pdepend.phar" />
+    <property name="phpcpd"     value="${project.basedir}/bin/phpcpd.phar" />
+    <property name="phpcs"      value="${project.basedir}/bin/phpcs.phar" />
+    <property name="phpcbf"     value="${project.basedir}/bin/phpcbf.phar" />
+    <property name="phploc"     value="${project.basedir}/bin/phploc.phar" />
+    <property name="phpmd"      value="${project.basedir}/bin/phpmd.phar" />
+    <property name="phpmetrics" value="${project.basedir}/bin/phpmetrics.phar" />
+
+    <target name="quality:setup" description="Setup quality environment">
+        <mkdir dir="${project.basedir}/build/test-results" />
+        <chmod file="${project.basedir}/bin/pdepend.phar" mode="0755" verbose="true"/>
+        <chmod file="${phpcpd}" mode="0755" />
+        <chmod file="${phpcs}" mode="0755" />
+        <chmod file="${phpcbf}" mode="0755" />
+        <chmod file="${phploc}" mode="0755" />
+        <chmod file="${phpmd}" mode="0755" />
+        <chmod file="${phpmetrics}" mode="0755" />
+    </target>
+
+    <target name="quality:lint-php" unless="quality:lint.done" depends="quality:setup" description="Perform syntax check of sourcecode files">
+        <exec executable="/bin/bash" dir="${project.basedir}" checkreturn="true" passthru="true">
+            <arg value="-c" />
+            <arg value="find ${project.basedir}/src -name '*.php' -print0 | xargs -0 -n1 -P8 php -l" />
+        </exec>
+
+        <property name="quality:lint.done" value="true" />
+    </target>
+
+    <target name="quality:phploc"  depends="quality:setup" unless="quality:phploc.done"
+            description="Measure project size using PHPLOC and print human readable output. Intended for usage on the command line.">
+        <exec executable="${phploc}" passthru="true" checkreturn="true">
+            <arg value="--count-tests" />
+            <arg value="--log-csv" />
+            <arg path="${project.basedir}/build/test-results/phploc.csv" />
+            <arg value="--log-xml" />
+            <arg path="${project.basedir}/build/test-results/phploc.xml" />
+            <arg path="${project.basedir}/src" />
+        </exec>
+
+        <property name="quality:phploc.done" value="true" />
+    </target>
+
+    <target name="quality:pdepend"  depends="quality:setup" unless="quality:pdepend.done"
+            description="Calculate software metrics using PHP_Depend and log result in XML format. Intended for usage within a continuous integration environment.">
+        <mkdir dir="${project.basedir}/build/pdepend" />
+        <exec executable="${pdepend}" passthru="true" checkreturn="true">
+            <arg value="--jdepend-xml=${project.basedir}/build/test-results/jdepend.xml" />
+            <arg value="--jdepend-chart=${project.basedir}/build/pdepend/dependencies.svg" />
+            <arg value="--overview-pyramid=${project.basedir}/build/pdepend/overview-pyramid.svg" />
+            <arg path="${project.basedir}/src" />
+        </exec>
+
+        <property name="quality:pdepend.done" value="true" />
+    </target>
+
+    <target name="quality:phpmd"  depends="quality:setup" unless="quality:phpmd.done"
+            description="Perform project mess detection using PHPMD and log result in XML format. Intended for usage within a continuous integration environment.">
+        <exec executable="${phpmd}" passthru="true" checkreturn="true">
+            <arg path="${project.basedir}/src" />
+            <arg value="xml" />
+            <arg path="${project.basedir}/phpmd.xml" />
+            <arg value="--reportfile" />
+            <arg path="${project.basedir}/build/test-results/pmd.xml" />
+        </exec>
+
+        <property name="quality:phpmd.done" value="true" />
+    </target>
+
+    <target name="quality:phpcpd" depends="quality:setup" unless="quality:phpcpd.done"
+            description="Find duplicate code using PHPCPD and log result in XML format. Intended for usage within a continuous integration environment.">
+        <exec executable="${phpcpd}" passthru="true" checkreturn="true">
+            <arg value="--log-pmd" />
+            <arg path="${project.basedir}/build/test-results/pmd-cpd.xml" />
+            <arg path="${project.basedir}/src" />
+        </exec>
+
+        <property name="quality:phpcpd.done" value="true" />
+    </target>
+
+    <target name="quality:phpcs" depends="quality:setup" unless="quality:phpcs.done"
+            description="Find coding standard violations using PHP_CodeSniffer and log result in XML format. Intended for usage within a continuous integration environment.">
+        <exec executable="${phpcs}" passthru="true" checkreturn="true">
+            <arg value="--report=checkstyle" />
+            <arg value="--report-file=${project.basedir}/build/test-results/checkstyle.xml" />
+            <arg value="--standard=PSR2" />
+            <arg value="--extensions=php" />
+            <arg value="--ignore=autoload.php" />
+            <arg value="--exclude=Symfony.Commenting.License" />
+            <arg value="--parallel=4" />
+            <arg path="${project.basedir}/src" />
+        </exec>
+
+        <property name="quality:phpcs.done" value="true" />
+    </target>
+
+    <target name="quality:phpmetrics" depends="quality:setup" unless="quality:phpmetrics.done"
+            description="Provides metrics about PHP project and classes, with beautiful and readable HTML report.">
+        <exec executable="${phpmetrics}" passthru="true" checkreturn="true">
+            <arg value="--report-html=${project.basedir}/build/metrics/metrics.html" />
+            <arg path="${project.basedir}/src" />
+        </exec>
+
+        <property name="quality:phpmetrics.done" value="true" />
+    </target>
+
+    <target name="quality:prepare" unless="quality:prepare.done" depends="quality:clean, quality:setup" description="Prepare for build">
+        <mkdir dir="${project.basedir}/build/coverage" />
+        <mkdir dir="${project.basedir}/build/test-results" />
+        <mkdir dir="${project.basedir}/build/pdepend" />
+        <mkdir dir="${project.basedir}/build/metrics" />
+        <property name="quality:prepare.done" value="true" />
+    </target>
+
+    <target name="quality:clean" unless="quality:clean.done" description="Cleanup build artifacts">
+        <delete dir="${project.basedir}/build/coverage" />
+        <delete dir="${project.basedir}/build/test-results" />
+        <delete dir="${project.basedir}/build/pdepend" />
+        <delete dir="${project.basedir}/build/metrics" />
+        <property name="quality:clean.done" value="true" />
+    </target>
+
+</project>
